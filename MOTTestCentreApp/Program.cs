@@ -2,11 +2,14 @@ using KwikFitTestCentreApi.Data;
 using KwikFitTestCentreApi.Interfaces;
 using KwikFitTestCentreApi.Repository;
 using Microsoft.EntityFrameworkCore;
+using MOTTestCentreApp.Interfaces;
+using MOTTestCentreApp.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IMOTTestCentreViewData, MOTTestCentreViewData>();
 builder.Services.AddScoped<IAuthorisedMOTTestersRepository, AuthorisedMOTTestersRepository>();
 builder.Services.AddScoped<IMOTStatusDetailsRepository, MOTStatusDetailsRepository>();
 builder.Services.AddScoped<IMOTTestCertificateDetailsRepository, MOTTestCertificateDetailsRepository>();

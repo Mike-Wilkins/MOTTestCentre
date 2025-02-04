@@ -1,8 +1,32 @@
-﻿@{
+﻿
+@using KwikFitTestCentreApi.Models
+@model AuthorisedMOTTesters
+
+
+@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-5">KwikFit Authorised Login</h1>
 </div>
+
+<form method="post">
+    <div class="container" style="background-color: #f2f2f2; width: 500px; text-align:center; margin-top: 50px;">
+        <div style="padding-top: 20px; padding-bottom: 20px;">
+            <h1 class="display-6" style="font-size: 25px;">Enter Your User ID</h1>
+        </div>
+        <div class="mb-3" style="width:220px; margin: auto; display: block;">
+            <input asp-for="UserID" class="form-control" placeholder="********" />
+            <span asp-validation-for="UserID" class="text-danger"></span>
+            @if(ViewBag.TesterExists == false)
+            {
+                <a style="color:red">Tester ID was not found</a>
+            }
+        </div>
+        <div style="padding-bottom: 20px;">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</form>

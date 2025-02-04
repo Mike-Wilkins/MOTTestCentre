@@ -1,0 +1,38 @@
+﻿@using MOTTestCentreApp.ViewModels
+@model MOTTestCentreViewData
+
+
+@* @{
+    ViewData["Title"] = "Create MOT Certificate";
+} *@
+
+<form method="post">
+    <div class="container" style="background-color: #f2f2f2; width: 1400px; text-align:center; margin-top: 50px;">
+        <div class="row">
+            <div class="col-1" style="padding-top:17px;">
+                <a class="text-info"><img src="/images/UserLogo.png" alt="images" style="width:50px; height:50px;"></a>
+            </div>
+            <div class="col-3" style="padding:10px; text-align:left">
+                <h1 style="font-size: 20px;">MOT Inspector</h1>
+                <h1 class="display-3" style="font-size: 20px;">@Model.authorisedMOTTesters.Firstname @Model.authorisedMOTTesters.Surname</h1>
+            </div>
+            <div class="col-3" style="padding-top: 35px; text-align:right;">
+                <h1 style="font-size: 20px;">Enter Registration Number :</h1>              
+            </div>
+            <div class="col-2" style="padding-top: 30px; text-align:left">
+                <input asp-for="statusDetails.RegistrationNumber" class="form-control" placeholder="e.g. MN07TWE" />
+                <span asp-validation-for="statusDetails.RegistrationNumber" class="text-danger"></span>
+            </div>
+            <div class="col-1" style="padding: 30px;">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+            <div class="col-1">
+                <input type="hidden" asp-for="authorisedMOTTesters.Firstname" value="@Model.authorisedMOTTesters.Firstname" />
+            </div>
+            <div class="col-1">
+                <input type="hidden" asp-for="authorisedMOTTesters.Surname" value="@Model.authorisedMOTTesters.Surname" />
+            </div>
+        </div>
+    </div>
+</form>
+
