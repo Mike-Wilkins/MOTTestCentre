@@ -76,6 +76,6 @@ namespace KwikFitTestCentreApi.Models
         [Name("MOTTestNumber")]
         [Display(Name = "MOT test number")]
         [Required(ErrorMessage = "MOT test number is required")]
-        public string? MOTTestNumber { get; set; }
+        public long MOTTestNumber { get; set; }
     }
 }

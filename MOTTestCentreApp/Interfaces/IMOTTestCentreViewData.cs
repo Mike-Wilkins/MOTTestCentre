@@ -7,5 +7,9 @@ namespace MOTTestCentreApp.Interfaces
         public AuthorisedMOTTesters authorisedMOTTesters { get; set; }
         public MOTStatusDetails statusDetails { get; set; }
         public MOTTestCertificateDetails certificateDetails { get; set; }
+        public bool RegistrationNullError { get; set; }
+        public bool RegistrationNotFoundError { get; set; } 
+        public bool MOTCreatedSuccess { get; set; }
+        public bool MOTAlreadyExists { get; set; }
     }
 }

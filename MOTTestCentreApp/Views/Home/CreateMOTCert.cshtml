@@ -15,16 +15,33 @@
             <div class="col-3" style="padding:10px; text-align:left">
                 <h1 style="font-size: 20px;">MOT Inspector</h1>
                 <h1 class="display-3" style="font-size: 20px;">@Model.authorisedMOTTesters.Firstname @Model.authorisedMOTTesters.Surname</h1>
-            </div>
+            </div class="col-1">
             <div class="col-3" style="padding-top: 35px; text-align:right;">
                 <h1 style="font-size: 20px;">Enter Registration Number :</h1>              
             </div>
-            <div class="col-2" style="padding-top: 30px; text-align:left">
-                <input asp-for="statusDetails.RegistrationNumber" class="form-control" placeholder="e.g. MN07TWE" />
-                <span asp-validation-for="statusDetails.RegistrationNumber" class="text-danger"></span>
-            </div>
+            @if(Model.RegistrationNotFoundError == false && Model.RegistrationNullError == false)
+            {
+                <div class="col-3" style="padding-top: 30px; text-align:left">
+                    <input type="text" name="registration" />
+                </div>
+            }
+            else if (Model.RegistrationNotFoundError == false && Model.RegistrationNullError == true)
+            {
+                <div class="col-3" style="padding-top: 30px; text-align:left">
+                    <input type="text" name="registration" />
+                    <h6 style="color:red">Enter a valid registration number</h6>
+                </div>
+            }
+            else if (Model.RegistrationNotFoundError == true && Model.RegistrationNullError == false)
+            {
+                <div class="col-3" style="padding-top: 30px; text-align:left">
+                    <input type="text" name="registration" />
+                    <h6 style="color:red">Registration number not found</h6>
+                </div>
+            }
+            
             <div class="col-1" style="padding: 30px;">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success" formaction="@Url.Action("CreateMOTCert")">Submit</button>
             </div>
             <div class="col-1">
                 <input type="hidden" asp-for="authorisedMOTTesters.Firstname" value="@Model.authorisedMOTTesters.Firstname" />

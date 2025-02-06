@@ -9,5 +9,9 @@ namespace MOTTestCentreApp.ViewModels
         public AuthorisedMOTTesters authorisedMOTTesters { get; set; }
         public MOTStatusDetails statusDetails { get; set; }
         public MOTTestCertificateDetails certificateDetails { get; set; }
+        public bool RegistrationNullError { get; set; } = false;
+        public bool RegistrationNotFoundError { get; set; } = false;
+        public bool MOTCreatedSuccess { get; set; } =false;
+        public bool MOTAlreadyExists { get; set; } = false ;
     }
 }
