@@ -88,7 +88,7 @@ namespace KwikFitTestCentreApi.Models
 
         [Name("TaxDueDate")]
         [Display(Name = "Tax Due Date")]
-        public string TaxDueDate { get; set; }
+        public string? TaxDueDate { get; set; }
 
         [Name("DateOfLastTAX")]
         [Display(Name = "Date of last TAX")]
@@ -100,7 +100,7 @@ namespace KwikFitTestCentreApi.Models
 
         [Name("MOTDueDate")]
         [Display(Name = "MOT Due Date")]
-        public string MOTDueDate { get; set; }
+        public string? MOTDueDate { get; set; }
 
         [Name("DateOfLastMOT")]
         [Display(Name = "Date of last MOT")]
