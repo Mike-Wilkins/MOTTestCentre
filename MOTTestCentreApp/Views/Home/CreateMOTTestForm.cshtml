@@ -57,8 +57,8 @@
                     </div>
                 }else if(Model.MOTNotRequired == true){
                     <div class="col-6">
-                        <h1 class="display-3" style="font-size: 20px; padding-top:15px; padding-right:180px; color:darkred;">Vehicle Registration Date : @Model.statusDetails.DateOfRegistration</h1>
-                        <h1 class="display-3" style="font-size: 20px; text-align:left; color:darkred;">This vehicle does not require an MOT test certificate</h1>
+                        <h1 class="display-3" style="font-size: 20px; padding-top:0px; padding-right:100px; color:darkred;">This vehicle does not require an MOT test certificate until</h1>
+                        <h1 class="display-3" style="font-size: 25px; padding-right:100px; color:darkred;">@Model.statusDetails.MOTDueDate</h1>
                     </div>
                 }else
                 {
