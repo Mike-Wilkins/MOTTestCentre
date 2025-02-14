@@ -95,8 +95,8 @@ namespace MOTTestCentreApp.Controllers
                 return View(_viewData);
             }
 
-
-
+            // Check if the vehicle is less than 3 years old
+            // If true, vehicle does not require an MOT certificate
             var dateOfRegistration = DateTime.Parse(vehicleDetails.FirstOrDefault().DateOfRegistration, new CultureInfo("en-GB",true));
 
             if (dateOfRegistration.AddYears(3) > DateTime.Now)
@@ -104,8 +104,6 @@ namespace MOTTestCentreApp.Controllers
                 _viewData.MOTNotRequired = true;
                 return View("CreateMOTTestForm", _viewData);
             }
-
-
 
             // Need to get latest MOT Certificate.
             // If latest MOT is still valid, we cannot create a new one.
@@ -168,7 +166,6 @@ namespace MOTTestCentreApp.Controllers
             if (testCount.Count != 0)
             {
                 _viewData.MOTAlreadyExists = true;
-               // _viewData.certificateDetails = testCount[0];
                 return View("CreateMOTTestForm", _viewData);
             }
 
