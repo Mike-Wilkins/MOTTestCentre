@@ -42,7 +42,7 @@
                 @if(Model.MOTAlreadyExists == true)
                 {
                     <div class="col-6">
-                        <h1 class="display-3" style="font-size: 20px; padding-top:15px; text-align:left; color:darkred; font-weight:bold">A test certificate already exists for this vehicle</h1>
+                        <h1 class="display-3" style="font-size: 20px; padding-top:15px; text-align:left; color:darkred; font-weight:bold">A valid test certificate already exists for this vehicle</h1>
                     </div>
                 }else if (Model.MOTCreatedSuccess == true)
                 {
@@ -94,7 +94,7 @@
                     </div>
                     <div class="col-4">
 
-                        @if (Model.MOTAlreadyExists == true)
+                        @if (Model.MOTAlreadyExists == true || Model.MOTCreatedSuccess)
                         {
                             <div class="mb-3">
                                 <h1 class="display-3" style="font-size: 20px; text-align: left;">Mileage</h1>
@@ -151,14 +151,14 @@
                             </div>
                             <div class="mb-3">
                                 <h1 class="display-3" style="font-size: 20px; text-align: left;">MOT Test Number</h1>
-                                <input asp-for="certificateDetails.MOTTestNumber" class="form-control" maxlength="14" readonly="readonly"/>
+                                <input asp-for="certificateDetails.MOTTestNumber" class="form-control" maxlength="14" value="@Model.UpdatedTestNumber" readonly="readonly"/>
                                 <span asp-validation-for="certificateDetails.MOTTestNumber" class="text-danger"></span>
                             </div>
                         }
                     </div>
                     <div class="col-4">
 
-                        @if (Model.MOTAlreadyExists == true)
+                        @if (Model.MOTAlreadyExists == true || Model.MOTCreatedSuccess)
                         {
                             <div class="mb-3">
                                 <h1 class="display-3" style="font-size: 20px; text-align: left;">Test Result</h1>

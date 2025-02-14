@@ -13,5 +13,6 @@ namespace MOTTestCentreApp.ViewModels
         public bool RegistrationNotFoundError { get; set; } = false;
         public bool MOTCreatedSuccess { get; set; } =false;
         public bool MOTAlreadyExists { get; set; } = false ;
+        public long UpdatedTestNumber { get; set; }
     }
 }

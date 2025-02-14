@@ -71,7 +71,7 @@ namespace MOTTestCentreApp.Controllers
         [HttpPost]
         public IActionResult CreateMOTCert(string registration, MOTTestCentreViewData tester)
         {
-            if (registration == null && tester.statusDetails.RegistrationNumber == null)
+            if (registration == null && tester.statusDetails == null)
             {
                 _viewData.RegistrationNullError = true;
                 _viewData.authorisedMOTTesters = tester.authorisedMOTTesters;
@@ -83,33 +83,40 @@ namespace MOTTestCentreApp.Controllers
                 registration = tester.statusDetails.RegistrationNumber;
             }
 
-            // Check if a vehicle exists on DVLA database
             var vehicleDetails = _statusDetailsRepository.GetStatusDetails().Where(x => x.RegistrationNumber == registration).ToList();
-
-            if (vehicleDetails.Count == 0)
-            {
-                _viewData.RegistrationNotFoundError = true;
-                _viewData.statusDetails = vehicleDetails.FirstOrDefault();
-                _viewData.authorisedMOTTesters = tester.authorisedMOTTesters;
-                return View(_viewData);
-            }
 
             _viewData.statusDetails = vehicleDetails.FirstOrDefault();
             _viewData.authorisedMOTTesters = tester.authorisedMOTTesters;
 
+            // Check if a vehicle exists on DVLA database
+            if (vehicleDetails.Count == 0)
+            {
+                _viewData.RegistrationNotFoundError = true;
+                return View(_viewData);
+            }
+
             // Need to get latest MOT Certificate.
             // If latest MOT is still valid, we cannot create a new one.
             // If an MOT does not exist (Count = 0), let's create one
+            GetLatestMOT();
 
-            var mOTCertHistory = _certificateDetailsRepository.GetTestCertificateDetails().
-                Where(x => x.RegistrationNumber == _viewData.statusDetails.RegistrationNumber).ToList();
-            
-            if (mOTCertHistory.Count == 0)
+            // If a valid MOT Certificate does not exist,
+            // increment each new MOT test number by 1. 
+
+            if (_viewData.MOTAlreadyExists != true)
             {
-                _viewData.statusDetails = vehicleDetails.FirstOrDefault();
-                _viewData.authorisedMOTTesters = tester.authorisedMOTTesters;            
+                IncrementTestNumber();
             }
-            else
+
+            return View("CreateMOTTestForm", _viewData);
+        }
+
+        public IMOTTestCentreViewData GetLatestMOT()
+        {
+            var mOTCertHistory = _certificateDetailsRepository.GetTestCertificateDetails().
+               Where(x => x.RegistrationNumber == _viewData.statusDetails.RegistrationNumber).ToList();
+
+            if (mOTCertHistory.Count > 0)
             {
                 var latestMOTCertNumber = mOTCertHistory.Max(x => x.MOTTestNumber);
                 var latestMOTCert = _certificateDetailsRepository.GetTestCertificateDetails().Where(x => x.MOTTestNumber == latestMOTCertNumber).ToList();
@@ -118,20 +125,20 @@ namespace MOTTestCentreApp.Controllers
                 if (latestMOTTestDate > DateTime.Now && latestMOTCert[0].TestResult == "PASS")
                 {
                     _viewData.MOTAlreadyExists = true;
-                    _viewData.statusDetails = vehicleDetails.FirstOrDefault();
-                    _viewData.authorisedMOTTesters = tester.authorisedMOTTesters;
-                    _viewData.certificateDetails = latestMOTCert[0];
-                    return View("CreateMOTTestForm", _viewData);
+                    _viewData.certificateDetails = latestMOTCert[0];              
                 }
             }
 
-            // Increment MOT Test Number by 1
+            return _viewData;
+        }
+
+        public IMOTTestCentreViewData IncrementTestNumber()
+        {
             var mOtTestNumbers = _certificateDetailsRepository.GetTestCertificateDetails().Where(x => x.MOTTestNumber > 0).ToList();
             var maxTestNumber = mOtTestNumbers.Max(x => x.MOTTestNumber);
-            _viewData.certificateDetails = mOtTestNumbers.Where(x => x.MOTTestNumber == maxTestNumber).FirstOrDefault();
-            _viewData.certificateDetails.MOTTestNumber = maxTestNumber + 1;
+            _viewData.UpdatedTestNumber = maxTestNumber + 1;
 
-            return View("CreateMOTTestForm", _viewData);
+            return _viewData;
         }
 
         [HttpPost]
@@ -143,10 +150,22 @@ namespace MOTTestCentreApp.Controllers
             _viewData.statusDetails = details.FirstOrDefault();
             _viewData.certificateDetails = testForm.certificateDetails;
 
+
+            var testNumber = testForm.certificateDetails.MOTTestNumber;
+            var testCount = _certificateDetailsRepository.GetTestCertificateDetails().Where(x => x.MOTTestNumber == testNumber).ToList();
+
+            if (testCount.Count != 0)
+            {
+                _viewData.MOTAlreadyExists = true;
+               // _viewData.certificateDetails = testCount[0];
+                return View("CreateMOTTestForm", _viewData);
+            }
+
+
             if (testForm.certificateDetails.Mileage == null || 
                 testForm.certificateDetails.TestLocation == null ||
                 testForm.certificateDetails.TestOrganisation == null ||
-                testForm.certificateDetails.InspectorName == null
+                testForm.certificateDetails.InspectorName == null   
                 )
             {
                 return View("CreateMOTTestForm", _viewData);
