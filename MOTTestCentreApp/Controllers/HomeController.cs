@@ -95,6 +95,18 @@ namespace MOTTestCentreApp.Controllers
                 return View(_viewData);
             }
 
+
+
+            var dateOfRegistration = DateTime.Parse(vehicleDetails.FirstOrDefault().DateOfRegistration, new CultureInfo("en-GB",true));
+
+            if (dateOfRegistration.AddYears(3) > DateTime.Now)
+            {
+                _viewData.MOTNotRequired = true;
+                return View("CreateMOTTestForm", _viewData);
+            }
+
+
+
             // Need to get latest MOT Certificate.
             // If latest MOT is still valid, we cannot create a new one.
             // If an MOT does not exist (Count = 0), let's create one
@@ -102,7 +114,6 @@ namespace MOTTestCentreApp.Controllers
 
             // If a valid MOT Certificate does not exist,
             // increment each new MOT test number by 1. 
-
             if (_viewData.MOTAlreadyExists != true)
             {
                 IncrementTestNumber();
@@ -161,13 +172,13 @@ namespace MOTTestCentreApp.Controllers
                 return View("CreateMOTTestForm", _viewData);
             }
 
-
             if (testForm.certificateDetails.Mileage == null || 
                 testForm.certificateDetails.TestLocation == null ||
                 testForm.certificateDetails.TestOrganisation == null ||
                 testForm.certificateDetails.InspectorName == null   
                 )
             {
+                _viewData.UpdatedTestNumber = testNumber;
                 return View("CreateMOTTestForm", _viewData);
             }
 
@@ -175,8 +186,6 @@ namespace MOTTestCentreApp.Controllers
             _viewData.MOTCreatedSuccess = true;
 
             return View("CreateMOTTestForm", _viewData);
-
-
         }
     }
 }

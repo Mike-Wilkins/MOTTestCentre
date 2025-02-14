@@ -42,7 +42,7 @@
                 @if(Model.MOTAlreadyExists == true)
                 {
                     <div class="col-6">
-                        <h1 class="display-3" style="font-size: 20px; padding-top:15px; text-align:left; color:darkred; font-weight:bold">A valid test certificate already exists for this vehicle</h1>
+                        <h1 class="display-3" style="font-size: 20px; padding-top:15px; text-align:left; color:darkred;">A test certificate already exists for this vehicle</h1>
                     </div>
                 }else if (Model.MOTCreatedSuccess == true)
                 {
@@ -54,6 +54,11 @@
                     </div>
                     <div class="col-1" style="text-align:right; padding-top:7px;">
                         <button type="submit" class="btn btn-success" style="width:80px;" formaction="@Url.Action("MOTTestForm")">Create</button>
+                    </div>
+                }else if(Model.MOTNotRequired == true){
+                    <div class="col-6">
+                        <h1 class="display-3" style="font-size: 20px; padding-top:15px; padding-right:180px; color:darkred;">Vehicle Registration Date : @Model.statusDetails.DateOfRegistration</h1>
+                        <h1 class="display-3" style="font-size: 20px; text-align:left; color:darkred;">This vehicle does not require an MOT test certificate</h1>
                     </div>
                 }else
                 {
@@ -120,6 +125,28 @@
                                 <input asp-for="certificateDetails.MOTTestNumber" class="form-control" maxlength="14" readonly="readonly" />
                                 <span asp-validation-for="certificateDetails.MOTTestNumber" class="text-danger"></span>
                             </div>
+                        }else if(Model.MOTNotRequired)
+                        {
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Mileage</h1>
+                                <input asp-for="certificateDetails.Mileage" class="form-control" maxlength="10" readonly="readonly" value="N/A" />
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Country of Registration</h1>
+                                <input asp-for="certificateDetails.CountryOfRegistration" class="form-control" maxlength="50" readonly="readonly" value="N/A" />
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Test Location</h1>
+                                <input asp-for="certificateDetails.TestLocation" class="form-control" maxlength="50" readonly="readonly" value="N/A"/>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Test Organisation</h1>
+                                <input asp-for="certificateDetails.TestOrganisation" class="form-control" maxlength="20" readonly="readonly" value="N/A" />
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">MOT Test Number</h1>
+                                <input asp-for="certificateDetails.MOTTestNumber" class="form-control" maxlength="14" readonly="readonly"/>
+                            </div>
                         }
                         else
                         {
@@ -183,6 +210,34 @@
                                 <h1 class="display-3" style="font-size: 20px; text-align: left;">Earliest Test Date</h1>
                                 <input asp-for="certificateDetails.EariestTestDate" class="form-control" maxlength="10" value="@Model.certificateDetails.EariestTestDate" readonly="readonly" />
                                 <span asp-validation-for="certificateDetails.EariestTestDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-1">
+                                <input type="hidden" asp-for="authorisedMOTTesters.Firstname" value="@Model.authorisedMOTTesters.Firstname" />
+                            </div>
+                            <div class="col-1">
+                                <input type="hidden" asp-for="authorisedMOTTesters.Surname" value="@Model.authorisedMOTTesters.Surname" />
+                            </div>
+                        }else if(Model.MOTNotRequired)
+                        {
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Test Result</h1>
+                                <input asp-for="certificateDetails.TestResult" class="form-control" maxlength="14" readonly="readonly" />
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Inspector Name</h1>
+                                <input asp-for="certificateDetails.InspectorName" class="form-control" maxlength="10" value="N/A" readonly="readonly" />
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Date of Test</h1>
+                                <input asp-for="certificateDetails.DateOfTest" class="form-control" maxlength="10" value="N/A" readonly="readonly" />                             
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Expiry Date</h1>
+                                <input asp-for="certificateDetails.ExpiryDate" class="form-control" maxlength="10" value="N/A" readonly="readonly" />                               
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Earliest Test Date</h1>
+                                <input asp-for="certificateDetails.EariestTestDate" class="form-control" maxlength="10" value="N/A" readonly="readonly" />                            
                             </div>
                             <div class="col-1">
                                 <input type="hidden" asp-for="authorisedMOTTesters.Firstname" value="@Model.authorisedMOTTesters.Firstname" />

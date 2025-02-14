@@ -14,5 +14,6 @@ namespace MOTTestCentreApp.ViewModels
         public bool MOTCreatedSuccess { get; set; } =false;
         public bool MOTAlreadyExists { get; set; } = false ;
         public long UpdatedTestNumber { get; set; }
+        public bool MOTNotRequired { get; set; } = false;
     }
 }

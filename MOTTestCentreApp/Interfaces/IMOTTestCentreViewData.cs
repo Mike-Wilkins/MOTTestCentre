@@ -12,6 +12,7 @@ namespace MOTTestCentreApp.Interfaces
         public bool MOTCreatedSuccess { get; set; }
         public bool MOTAlreadyExists { get; set; }
         public long UpdatedTestNumber { get; set; }
+        public bool MOTNotRequired { get; set; }
       
     }
 }
