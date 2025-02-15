@@ -180,7 +180,15 @@ namespace MOTTestCentreApp.Controllers
             }
 
             _certificateDetailsRepository.Add(testForm.certificateDetails);
-            _viewData.MOTCreatedSuccess = true;
+
+            if (testForm.certificateDetails.TestResult == "PASS")
+            {
+                _viewData.MOTCreatedPass = true;
+            }
+            else
+            {
+                _viewData.MOTCreatedFail = true;
+            }    
 
             return View("CreateMOTTestForm", _viewData);
         }

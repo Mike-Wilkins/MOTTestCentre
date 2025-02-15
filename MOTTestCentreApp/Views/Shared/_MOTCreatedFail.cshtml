@@ -1,0 +1,123 @@
+﻿@using MOTTestCentreApp.ViewModels
+@model MOTTestCentreViewData
+
+<form method="post">
+    <div class="container" style="background-color: #f2f2f2; width: 2000px; text-align:center; margin-top: 50px;">
+        <div class="row p-3">
+            <div class="row pb-2" style="margin-bottom:30px;">
+                <div class="col-4" style="text-align:left; padding-left: 100px;">
+                    <h1 style="font-size: 20px; padding-top:7px;">MOT Test Form</h1>
+                </div>
+                <div class="col-1">
+                    <a class="text-info"><img src="/images/orange-warning-icon.png" alt="images" align="right" style="width:50px; height:50px;"></a>
+                </div>
+                <div class="col-4">
+                    <h1 class="display-3" style="font-size: 20px; text-align:left;">Vehicle has failed the MOT test</h1>
+                    <h1 class="display-3" style="font-size: 18px; text-align:left;">Reschedule a new test following vehicle repairs</h1>
+                </div>
+                <div class="col-1" style="padding-top:7px; padding-left:118px;">
+                    <button type="submit" class="btn btn-success" style="width:80px;" formaction="@Url.Action("MOTTestForm")" disabled>Create</button>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="mb-3">
+                            <h1 class="display-3" style="font-size: 20px; text-align: left;">Vehicle Id</h1>
+                            <input asp-for="certificateDetails.VehicleID" class="form-control" maxlength="10" value="@Model.statusDetails.VehicleID" readonly="readonly" />
+                            <span asp-validation-for="certificateDetails.VehicleID" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <h1 class="display-3" style="font-size: 20px; text-align: left;">Registration Number</h1>
+                            <input asp-for="certificateDetails.RegistrationNumber" class="form-control" maxlength="10" value="@Model.statusDetails.RegistrationNumber" readonly="readonly" />
+                            <span asp-validation-for="certificateDetails.RegistrationNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <h1 class="display-3" style="font-size: 20px; text-align: left;">Make</h1>
+                            <input asp-for="certificateDetails.Make" class="form-control" maxlength="10" value="@Model.statusDetails.Make" readonly="readonly" />
+                            <span asp-validation-for="certificateDetails.Make" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <h1 class="display-3" style="font-size: 20px; text-align: left;">Model</h1>
+                            <input asp-for="certificateDetails.Model" class="form-control" maxlength="10" value="@Model.statusDetails.Model" readonly="readonly" />
+                            <span asp-validation-for="certificateDetails.Model" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <h1 class="display-3" style="font-size: 20px; text-align: left;">Vehicle Category</h1>
+                            <input asp-for="certificateDetails.VehicleCategory" class="form-control" maxlength="10" value="@Model.statusDetails.VehicleTypeApproval" readonly="readonly" />
+                            <span asp-validation-for="certificateDetails.VehicleCategory" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">           
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Mileage</h1>
+                                <input asp-for="certificateDetails.Mileage" class="form-control" maxlength="10" value="" />
+                                <span asp-validation-for="certificateDetails.Mileage" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Country of Registration</h1>
+                                <select asp-for="certificateDetails.CountryOfRegistration" class="form-select">
+                                    <option value="GB">GB</option>
+                                    <option value="FR">FR</option>
+                                    <option value="IE">IR</option>
+                                    <option value="FR">FR</option>
+                                    <option value="US">US</option>
+                                    <option value="DE">DE</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Test Location</h1>
+                                <input asp-for="certificateDetails.TestLocation" class="form-control" maxlength="50" value="" />
+                                <span asp-validation-for="certificateDetails.TestLocation" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Test Organisation</h1>
+                                <input asp-for="certificateDetails.TestOrganisation" class="form-control" maxlength="20" value="" />
+                                <span asp-validation-for="certificateDetails.TestOrganisation" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">MOT Test Number</h1>
+                                <input asp-for="certificateDetails.MOTTestNumber" class="form-control" maxlength="14" value="@Model.UpdatedTestNumber" readonly="readonly" />
+                                <span asp-validation-for="certificateDetails.MOTTestNumber" class="text-danger"></span>
+                            </div>
+                    </div>
+                    <div class="col-4">                   
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Test Result</h1>
+                                <select asp-for="certificateDetails.TestResult" class="form-select">
+                                    <option value="PASS">PASS</option>
+                                    <option value="FAIL">FAIL</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Inspector Name</h1>
+                                <input asp-for="certificateDetails.InspectorName" class="form-control" maxlength="10" value="@Model.authorisedMOTTesters.Firstname @Model.authorisedMOTTesters.Surname" />
+                                <span asp-validation-for="certificateDetails.InspectorName" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Date of Test</h1>
+                                <input asp-for="certificateDetails.DateOfTest" class="form-control" maxlength="10" value="@DateTime.Now.ToString("dd/MM/yyyy")" readonly="readonly" />
+                                <span asp-validation-for="certificateDetails.DateOfTest" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Expiry Date</h1>
+                                <input asp-for="certificateDetails.ExpiryDate" class="form-control" maxlength="10" value="@DateTime.Now.AddYears(1).ToString("dd/MM/yyyy")" readonly="readonly" />
+                                <span asp-validation-for="certificateDetails.ExpiryDate" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <h1 class="display-3" style="font-size: 20px; text-align: left;">Earliest Test Date</h1>
+                                <input asp-for="certificateDetails.EariestTestDate" class="form-control" maxlength="10" value="@DateTime.Now.AddYears(1).AddDays(7).ToString("dd/MM/yyyy")" readonly="readonly" />
+                                <span asp-validation-for="certificateDetails.EariestTestDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-1">
+                                <input type="hidden" asp-for="authorisedMOTTesters.Firstname" value="@Model.authorisedMOTTesters.Firstname" />
+                            </div>
+                            <div class="col-1">
+                                <input type="hidden" asp-for="authorisedMOTTesters.Surname" value="@Model.authorisedMOTTesters.Surname" />
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
