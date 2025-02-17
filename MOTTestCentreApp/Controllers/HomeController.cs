@@ -159,7 +159,6 @@ namespace MOTTestCentreApp.Controllers
             _viewData.statusDetails = details.FirstOrDefault();
             _viewData.certificateDetails = testForm.certificateDetails;
 
-
             var testNumber = testForm.certificateDetails.MOTTestNumber;
             var testCount = _certificateDetailsRepository.GetTestCertificateDetails().Where(x => x.MOTTestNumber == testNumber).ToList();
 
