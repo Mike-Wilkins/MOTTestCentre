@@ -51,18 +51,18 @@ namespace MOTTestCentreApp.Controllers
 
             var authorisedTesterId = _authorisedMOTTestersRepository.GetAuthorisedTesters().FirstOrDefault(x => x.UserID == tester.UserID);
 
+            if (authorisedTesterId == null) 
+            {
+                ViewBag.TesterExists = false;
+                return View(tester);
+            }
+
             GlobalVariables.FirstName = authorisedTesterId.Firstname;
             GlobalVariables.LastName = authorisedTesterId.Surname;
             GlobalVariables.UserId = authorisedTesterId.UserID;
             GlobalVariables.IsManager = authorisedTesterId.isManager;
 
             ViewBag.TesterExists = true;
-
-            if (authorisedTesterId == null) 
-            {
-                ViewBag.TesterExists = false;
-                return View(tester);
-            }
 
             return RedirectToAction("CreateMOTCert", authorisedTesterId);
         }

@@ -78,7 +78,7 @@
                             </div>
                             <div class="mb-3">
                                 <h1 class="display-3" style="font-size: 20px; text-align: left;">Inspector Name</h1>
-                                <input asp-for="certificateDetails.InspectorName" class="form-control" maxlength="10" value="@Model.authorisedMOTTesters.Firstname @Model.authorisedMOTTesters.Surname" readonly="readonly" />
+                                <input asp-for="certificateDetails.InspectorName" class="form-control" maxlength="10" value="@Model.certificateDetails.InspectorName" readonly="readonly" />
                                 <span asp-validation-for="certificateDetails.InspectorName" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
