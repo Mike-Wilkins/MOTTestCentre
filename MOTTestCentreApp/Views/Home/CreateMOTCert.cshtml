@@ -1,11 +1,6 @@
 ﻿@using MOTTestCentreApp.ViewModels
 @model MOTTestCentreViewData
 
-
-@* @{
-    ViewData["Title"] = "Create MOT Certificate";
-} *@
-
 <form method="post">
     <div class="container" style="background-color: #f2f2f2; width: 1400px; text-align:center; margin-top: 50px;">
         <div class="row">
@@ -14,7 +9,11 @@
             </div>
             <div class="col-3" style="padding:10px; text-align:left">
                 <h1 style="font-size: 20px;">MOT Inspector</h1>
-                <h1 class="display-3" style="font-size: 20px;">@Model.authorisedMOTTesters.Firstname @Model.authorisedMOTTesters.Surname</h1>
+                @if(Model.authorisedMOTTesters.Firstname is null){
+                    <h1 class="display-3" style="font-size: 20px;">@ViewBag.Tester</h1>
+                }else{
+                    <h1 class="display-3" style="font-size: 20px;">@Model.authorisedMOTTesters.Firstname @Model.authorisedMOTTesters.Surname</h1>
+                }
             </div class="col-1">
             <div class="col-3" style="padding-top: 35px; text-align:right;">
                 <h1 style="font-size: 20px;">Enter Registration Number :</h1>              
@@ -48,6 +47,9 @@
             </div>
             <div class="col-1">
                 <input type="hidden" asp-for="authorisedMOTTesters.Surname" value="@Model.authorisedMOTTesters.Surname" />
+            </div>
+            <div class="col-1">
+                <input type="hidden" asp-for="authorisedMOTTesters.isManager" value="@Model.authorisedMOTTesters.isManager" />
             </div>
         </div>
     </div>

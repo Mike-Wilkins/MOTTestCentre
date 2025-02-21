@@ -14,6 +14,7 @@ namespace MOTTestCentreApp.Interfaces
         public bool MOTAlreadyExists { get; set; }
         public long UpdatedTestNumber { get; set; }
         public bool MOTNotRequired { get; set; }
-      
+        public bool IsManager { get; set; }
+
     }
 }

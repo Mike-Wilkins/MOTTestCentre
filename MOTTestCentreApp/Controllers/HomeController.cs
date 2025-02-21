@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Globalization;
 using KwikFitTestCentreApi.Interfaces;
 using KwikFitTestCentreApi.Models;
@@ -50,6 +51,11 @@ namespace MOTTestCentreApp.Controllers
 
             var authorisedTesterId = _authorisedMOTTestersRepository.GetAuthorisedTesters().FirstOrDefault(x => x.UserID == tester.UserID);
 
+            GlobalVariables.FirstName = authorisedTesterId.Firstname;
+            GlobalVariables.LastName = authorisedTesterId.Surname;
+            GlobalVariables.UserId = authorisedTesterId.UserID;
+            GlobalVariables.IsManager = authorisedTesterId.isManager;
+
             ViewBag.TesterExists = true;
 
             if (authorisedTesterId == null) 
@@ -63,6 +69,8 @@ namespace MOTTestCentreApp.Controllers
 
         public IActionResult CreateMOTCert(AuthorisedMOTTesters tester)
         {
+            ViewBag.Tester = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
+            _viewData.IsManager = GlobalVariables.IsManager;
             _viewData.authorisedMOTTesters = tester;
 
             return View(_viewData);
@@ -71,6 +79,10 @@ namespace MOTTestCentreApp.Controllers
         [HttpPost]
         public IActionResult CreateMOTCert(string registration, MOTTestCentreViewData tester)
         {
+            ViewBag.Tester = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
+            _viewData.IsManager = GlobalVariables.IsManager;
+
+
             if (registration == null && tester.statusDetails == null)
             {
                 _viewData.RegistrationNullError = true;
@@ -190,6 +202,46 @@ namespace MOTTestCentreApp.Controllers
             }    
 
             return View("CreateMOTTestForm", _viewData);
+        }
+        public IActionResult EditMOT()
+        {
+            // IN PROGRESS_________________________________________________________________________________________________ !!!! 
+
+
+            var testerName = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
+
+            return View();
+        }
+
+        public IActionResult CreateNewTester()
+        {
+            ViewBag.Tester = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
+            _viewData.authorisedMOTTesters = _authorisedMOTTestersRepository.GetAuthorisedTesters().FirstOrDefault(x => x.UserID == GlobalVariables.UserId);
+
+            if (_viewData.authorisedMOTTesters.isManager == true)
+            {_viewData.IsManager = true;
+            }
+
+            _viewData.authorisedMOTTesters.isManager = false;
+
+            return View(_viewData);
+        }
+        [HttpPost]
+        public IActionResult CreateNewTester(MOTTestCentreViewData tester)
+        {
+            if(tester.authorisedMOTTesters.Firstname == null ||
+               tester.authorisedMOTTesters.Surname == null ||
+               tester.authorisedMOTTesters.UserID == null
+               )
+            {
+                tester.authorisedMOTTesters.isManager = GlobalVariables.IsManager;
+                return View("CreateNewTester", tester);
+            }
+            ViewBag.Tester = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
+            _authorisedMOTTestersRepository.Add(tester.authorisedMOTTesters);
+            tester.authorisedMOTTesters.isManager = GlobalVariables.IsManager;
+
+            return View(tester);
         }
     }
 }

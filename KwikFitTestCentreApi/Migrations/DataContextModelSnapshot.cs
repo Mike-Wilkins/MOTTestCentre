@@ -39,6 +39,9 @@ namespace KwikFitTestCentreApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("isManager")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("AuthorisedMOTTesters");
@@ -89,7 +92,6 @@ namespace KwikFitTestCentreApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MOTDueDate")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("MOTed")
@@ -116,7 +118,6 @@ namespace KwikFitTestCentreApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxDueDate")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Taxed")
@@ -174,9 +175,8 @@ namespace KwikFitTestCentreApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MOTTestNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("MOTTestNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Make")
                         .IsRequired()

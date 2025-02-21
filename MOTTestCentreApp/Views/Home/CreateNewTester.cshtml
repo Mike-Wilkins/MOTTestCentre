@@ -1,0 +1,45 @@
+﻿@using MOTTestCentreApp.ViewModels
+@model MOTTestCentreViewData
+
+
+<form method="post">
+    <div class="container" style="background-color: #f2f2f2; width: 700px; text-align:center; margin-top: 50px;">
+        <div class="row">
+            <div class="col-1" style="padding-top:17px;">
+                <a class="text-info"><img src="/images/UserLogo.png" alt="images" style="width:50px; height:50px;"></a>
+            </div>
+            <div class="col-3" style="padding:10px; text-align:left">
+                <h1 style="font-size: 20px;">MOT Inspector</h1>
+                <h1 class="display-3" style="font-size: 20px;">@ViewBag.Tester</h1>
+            </div>
+         
+            <div class="col-1" style="padding-left: 300px; padding-top:50px;">
+                <button type="submit" class="btn btn-success" formaction="@Url.Action("CreateNewTester")">Submit</button>
+            </div>
+            <div  style="text-align:left; padding-left: 10px;">
+                <h1 style="font-size: 20px; padding-top:7px;">New Tester Form</h1>
+            </div>
+            <div class="mb-3">
+                <h1 class="display-3" style="font-size: 20px; text-align: left;">Firstname</h1>
+                <input asp-for="authorisedMOTTesters.Firstname" class="form-control" maxlength="30" value=""/>
+                <span asp-validation-for="authorisedMOTTesters.Firstname" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <h1 class="display-3" style="font-size: 20px; text-align: left;">Surname</h1>
+                <input asp-for="authorisedMOTTesters.Surname" class="form-control" maxlength="20" value="" />
+                <span asp-validation-for="authorisedMOTTesters.Surname" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <h1 class="display-3" style="font-size: 20px; text-align: left;">User ID</h1>
+                <input asp-for="authorisedMOTTesters.UserID" class="form-control" maxlength="20" value="" />
+                <span asp-validation-for="authorisedMOTTesters.UserID" class="text-danger"></span>
+            </div>
+            <div class="mb-3" style=" padding:10px; text-align:left;">          
+                <label for="isManger" class="display-3" style="font-size: 20px;text-align:left; padding-right:10px;">Tick if this role is a manager position</label>           
+                @Html.CheckBoxFor(model => model.authorisedMOTTesters.isManager, new { @class = "form-check-input" })
+            </div>
+        </div>
+    </div>
+</form>
