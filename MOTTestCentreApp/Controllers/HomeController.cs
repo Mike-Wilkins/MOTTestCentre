@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
+using System.Numerics;
 using KwikFitTestCentreApi.Interfaces;
 using KwikFitTestCentreApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -81,7 +82,6 @@ namespace MOTTestCentreApp.Controllers
         {
             ViewBag.Tester = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
             _viewData.IsManager = GlobalVariables.IsManager;
-
 
             if (registration == null && tester.statusDetails == null)
             {
@@ -203,27 +203,57 @@ namespace MOTTestCentreApp.Controllers
 
             return View("CreateMOTTestForm", _viewData);
         }
-        public IActionResult EditMOT()
+        public IActionResult EditMOTList()
         {
-            // IN PROGRESS_________________________________________________________________________________________________ !!!! 
+            //var testerName = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
 
+            _viewData.certificateDetailsList = _certificateDetailsRepository.GetTestCertificateDetails()
+                .OrderByDescending(i => i.MOTTestNumber)
+                .DistinctBy(x => x.RegistrationNumber)
+                .ToList();
 
-            var testerName = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
+            var testerAuth = GetAuthorisation();
+            _viewData.authorisedMOTTesters = testerAuth.authorisedMOTTesters;
 
-            return View();
+            return View(_viewData);
+        }
+       
+        public IActionResult EditMOT(int id)
+        {
+            _viewData.certificateDetails = _certificateDetailsRepository.GetTestCertificateDetail(id);
+            var testerAuth = GetAuthorisation();
+            _viewData.authorisedMOTTesters = testerAuth.authorisedMOTTesters;
+
+            return View(_viewData);
+        }
+
+        [HttpPost]
+        public IActionResult Update(MOTTestCentreViewData motCert)
+        {        
+            if (motCert.certificateDetails.Mileage == null ||
+                motCert.certificateDetails.TestLocation == null ||
+                motCert.certificateDetails.TestOrganisation == null ||
+                motCert.certificateDetails.InspectorName == null)
+            {
+                return View("EditMOTDetails", motCert);
+            }
+            _certificateDetailsRepository.Update(motCert.certificateDetails);
+
+            var testerAuth = GetAuthorisation();
+            motCert.authorisedMOTTesters = testerAuth.authorisedMOTTesters;
+
+            motCert.IsManager = GlobalVariables.IsManager;
+
+            return View("EditMOT",motCert);
         }
 
         public IActionResult CreateNewTester()
         {
             ViewBag.Tester = GlobalVariables.FirstName + " " + GlobalVariables.LastName;
-            _viewData.authorisedMOTTesters = _authorisedMOTTestersRepository.GetAuthorisedTesters().FirstOrDefault(x => x.UserID == GlobalVariables.UserId);
 
-            if (_viewData.authorisedMOTTesters.isManager == true)
-            {_viewData.IsManager = true;
-            }
-
-            _viewData.authorisedMOTTesters.isManager = false;
-
+            var testerAuth = GetAuthorisation();
+            _viewData.authorisedMOTTesters = testerAuth.authorisedMOTTesters;
+           
             return View(_viewData);
         }
         [HttpPost]
@@ -242,6 +272,20 @@ namespace MOTTestCentreApp.Controllers
             tester.authorisedMOTTesters.isManager = GlobalVariables.IsManager;
 
             return View(tester);
+        }
+
+        public IMOTTestCentreViewData GetAuthorisation()
+        {
+            _viewData.authorisedMOTTesters = _authorisedMOTTestersRepository.GetAuthorisedTesters().FirstOrDefault(x => x.UserID == GlobalVariables.UserId)!;
+
+            if (_viewData.authorisedMOTTesters!.isManager == true)
+            {
+                _viewData.IsManager = true;
+            }
+
+            _viewData.authorisedMOTTesters.isManager = false;
+
+            return _viewData;
         }
     }
 }

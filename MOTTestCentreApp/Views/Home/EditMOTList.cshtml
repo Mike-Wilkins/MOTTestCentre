@@ -1,0 +1,61 @@
+﻿@using MOTTestCentreApp.Models
+@model MOTTestCentreApp.ViewModels.MOTTestCentreViewData
+
+<div class="container" style="background-color: #f2f2f2; width: 1400px; margin-top: 50px;">
+	<div class="row">
+		<div class="col-12" style="padding-top:17px;">
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.certificateDetails.MOTTestNumber)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.certificateDetails.RegistrationNumber)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.certificateDetails.Make)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.certificateDetails.Model)
+						</th>
+
+						@if (ViewBag.IsOrganiser == false)
+						{
+							<th></th>
+							<th></th>
+						}
+						else
+						{
+							<th></th>
+						}
+					</tr>
+				</thead>
+				<tbody>
+
+					@foreach (var item in Model.certificateDetailsList)
+					{
+						<tr>
+							<td>
+								@Html.DisplayFor(modelItem => item.MOTTestNumber)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.RegistrationNumber)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Make)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Model)
+							</td>
+							<td>
+								<div>
+									<a asp-action="EditMOT" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit MOT Details</a>
+								</div>
+							</td>
+						</tr>
+					}
+			</table>
+		</div>
+	</div>
+</div>
