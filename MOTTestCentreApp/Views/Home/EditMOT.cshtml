@@ -1,18 +1,28 @@
 ﻿@using MOTTestCentreApp.Models
 @model MOTTestCentreApp.ViewModels.MOTTestCentreViewData
 
-@* <form method="post"> *@
 <form asp-action="Update">
     <div class="container" style="background-color: #f2f2f2; width: 2000px; text-align:center; margin-top: 50px;">
         <div class="row p-3">
-            <div class="row pb-2" style="margin-bottom:30px;">
-                <div class="col-4" style="text-align:left; padding-left: 100px;">
+            <div class="row pb-1" style="margin-bottom:30px;">
+                <div class="col-3" style="text-align:left; padding-left: 100px;">
                     <h1 style="font-size: 20px; padding-top:7px;">MOT Test Form</h1>
                 </div>
-                <div class="col-6" style="padding-top:7px; padding-left:645px;">
-                    @*  <button type="submit" class="btn btn-success" style="width:180px;" formaction="@Url.Action("EditMOTDetails")">Edit MOT Details</button> *@
-                    <button type="submit" class="btn btn-success" style="width:180px;">Edit MOT Details</button>
-                </div>
+                @if (Model.EditSuccessful == true)
+                {
+                    <div class="col-6">
+                        <h1 style="font-size: 20px; padding-top:7px; color:#004d80">MOT certificate No: @Model.certificateDetails.MOTTestNumber successfully updated</h1>
+                    </div>
+                    <div class="col-3" style="padding-top:7px; padding-left:0px;">
+                        <button type="submit" class="btn btn-success" style="width:180px;">Edit MOT Details</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-3" style="padding-top:7px; padding-left:695px;">
+                        <button type="submit" class="btn btn-success" style="width:180px;">Edit MOT Details</button>
+                    </div>
+                }
             </div>
             <div class="container">
                 <div class="row">

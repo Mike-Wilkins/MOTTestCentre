@@ -17,6 +17,7 @@ namespace MOTTestCentreApp.ViewModels
         public bool MOTNotRequired { get; set; } = false;
         public bool MOTCreatedFail { get; set; }
         public bool IsManager {  get; set; } = false;
+        public bool EditSuccessful { get; set; } = false;
         public ICollection<MOTTestCertificateDetails> certificateDetailsList { get; set; }
     }
 }

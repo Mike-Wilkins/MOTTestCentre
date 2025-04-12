@@ -243,6 +243,7 @@ namespace MOTTestCentreApp.Controllers
             motCert.authorisedMOTTesters = testerAuth.authorisedMOTTesters;
 
             motCert.IsManager = GlobalVariables.IsManager;
+            motCert.EditSuccessful = true;
 
             return View("EditMOT",motCert);
         }
