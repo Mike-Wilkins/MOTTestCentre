@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MOTTestCentreApp", "MOTTest
 		{5ABB23CC-0454-422D-87F8-D4FA9509CF25} = {5ABB23CC-0454-422D-87F8-D4FA9509CF25}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerApp", "CustomerApp\CustomerApp.csproj", "{5C1F53E0-657F-4680-89AC-DEC0779B6E0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,8 +26,15 @@ Global
 		{F2C85D18-1018-40D1-9933-175DEA2C457A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2C85D18-1018-40D1-9933-175DEA2C457A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2C85D18-1018-40D1-9933-175DEA2C457A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C1F53E0-657F-4680-89AC-DEC0779B6E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C1F53E0-657F-4680-89AC-DEC0779B6E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C1F53E0-657F-4680-89AC-DEC0779B6E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C1F53E0-657F-4680-89AC-DEC0779B6E0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D39924B2-C8F2-4222-9DAA-40F666C95433}
 	EndGlobalSection
 EndGlobal

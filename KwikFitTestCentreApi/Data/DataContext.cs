@@ -12,6 +12,7 @@ namespace KwikFitTestCentreApi.Data
         public DbSet<MOTStatusDetails> MOTStatus { get; set; }
         public DbSet<MOTTestCertificateDetails> MOTTestCertificateDetails { get; set; }
         public DbSet<AuthorisedMOTTesters> AuthorisedMOTTesters { get; set; }
+        public DbSet<TestCentres> TestCentres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +23,9 @@ namespace KwikFitTestCentreApi.Data
                HasKey(msd => msd.Id);
 
             modelBuilder.Entity<AuthorisedMOTTesters>().
+               HasKey(msd => msd.Id);
+
+            modelBuilder.Entity<TestCentres>().
                HasKey(msd => msd.Id);
         }
     }
